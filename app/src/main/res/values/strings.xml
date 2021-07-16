@@ -1,5 +1,13 @@
 <resources>
-    <string name="app_name">City Heraldry</string>
+    <string name="Заметки">Заметки</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="search">Поиск</string>
+    <string name="favorite">Избранное</string>
+    <string name="smt_1">Что-то №1</string>
+    <string name="smt_2">Что-то №2</string>
+    <string name="smt_3">Что-то № 3</string>
+    <string name="about">О приложении</string>
+    <string name="open">Открыть</string>
+    <string name="close">Закрыть</string>
 </resources>
