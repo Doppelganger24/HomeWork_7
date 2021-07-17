@@ -1,14 +1,19 @@
 package ru.geekbrains.HomeWork;
 
+import android.database.DataSetObserver;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.TextView;
 
+import UI.AdapterNote;
 import ru.geekbrains.cityheraldry.R;
 
 public class NoteDescriptionFragment extends Fragment {
@@ -37,13 +42,26 @@ public class NoteDescriptionFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_note_description, container, false);
-        TextView textView = view.findViewById(R.id.textView);
-        String[] noteDescription = view.getResources().getStringArray(R.array.noteDescription);
-        for (int i = 0; i < noteDescription.length; i++) {
-            textView.setText(noteDescription[note.getNoteIndex()]);
-        }
+        View view = inflater.inflate(R.layout.item, container, false);
+        RecyclerView recyclerView = view.findViewById(R.id.text11);
+        Note.CardsSource data = new CardsSourceImpl(getResources()).init();
+        initRecyclerView(recyclerView, data);
         return view;
+
+
+    }
+
+    private void initRecyclerView(RecyclerView recyclerView, Note.CardsSource
+            data) {
+
+        recyclerView.setHasFixedSize(true);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(layoutManager);
+        final AdapterNote adapter = new AdapterNote(data);
+
 
     }
 }
+
+
+

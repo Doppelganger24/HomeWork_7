@@ -12,17 +12,18 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import ru.geekbrains.HomeWork.Note;
 import ru.geekbrains.cityheraldry.R;
 
 
 public class AdapterNote extends RecyclerView.Adapter<AdapterNote.ViewHolder> {
 
-
-    private final String[] dataSource;
+    private Note.CardsSource dataSource;
     private OnItemClickListener itemClickListener;
+    private TextView description;
 
 
-    public AdapterNote(String[] dataSource) {
+    public AdapterNote(Note.CardsSource dataSource) {
         this.dataSource = dataSource;
     }
 
@@ -35,24 +36,29 @@ public class AdapterNote extends RecyclerView.Adapter<AdapterNote.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(AdapterNote.ViewHolder holder, int position) {
-        holder.getTextView().setText(dataSource[position]);
+    public void onBindViewHolder(AdapterNote.ViewHolder viewHolder, int position) {
+      viewHolder.setData (dataSource.getCardData(position));
+
+    }
+    public void setData(Note cardData){
+        description.setText(cardData.getNoteDescriptionIndex());
 
     }
 
+
     @Override
     public int getItemCount() {
-        return dataSource.length;
+        return dataSource.size();
     }
 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView textView;
+        private TextView description;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            textView = (TextView) itemView;
-            textView.setOnClickListener(new View.OnClickListener() {
+            description = itemView.findViewById(R.id.text11);
+            description.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     if (itemClickListener != null) {
@@ -62,9 +68,9 @@ public class AdapterNote extends RecyclerView.Adapter<AdapterNote.ViewHolder> {
             });
         }
 
-        public TextView getTextView() {
+        /*public TextView getTextView() {
             return textView;
-        }
+        }*/
     }
 
     public void SetOnItemClickListener(OnItemClickListener itemClickListener) {

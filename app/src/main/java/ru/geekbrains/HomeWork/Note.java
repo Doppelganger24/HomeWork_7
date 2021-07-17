@@ -7,6 +7,17 @@ public class Note implements Parcelable {
     private int noteIndex;
     private String noteDescriptionIndex;
 
+
+
+    public Note (String noteDescriptionIndex) {
+
+        this.noteDescriptionIndex = noteDescriptionIndex;
+    }
+    public interface CardsSource {
+        Note getCardData(int position);
+        int size();}
+
+
     public Note(int noteIndex, String noteDescriptionIndex) {
         this.noteIndex = noteIndex;
         this.noteDescriptionIndex = noteDescriptionIndex;

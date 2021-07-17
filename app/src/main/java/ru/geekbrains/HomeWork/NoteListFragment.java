@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 
 import UI.AdapterNote;
@@ -34,26 +35,25 @@ public class NoteListFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_note_list, container, false);
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view_lines);
-        String[] data = getResources().getStringArray(R.array.NoteList);
+        Note.CardsSource data = new CardsSourceImpl(getResources()).init();
         initRecyclerView(recyclerView, data);
         return view;
 
     }
 
-    private void initRecyclerView(RecyclerView recyclerView, String[] data) {
+    private void initRecyclerView(RecyclerView recyclerView, Note.CardsSource data) {
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
         final AdapterNote adapterNote = new AdapterNote(data);
-        recyclerView.setAdapter(adapterNote);
-        adapterNote.SetOnItemClickListener(new AdapterNote.OnItemClickListener() {
+        recyclerView.setAdapter(adapterNote);}
+       /* adapterNote.SetOnItemClickListener(new AdapterNote.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                currentNote = new Note(position, data[position]);
-                ShowNoteDescription(currentNote);
+                Toast.makeText(getContext(), String.format("Позиция - %d", position), Toast.LENGTH_SHORT).show();
             }
         });
-    }
+    }*/
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
