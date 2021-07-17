@@ -36,6 +36,7 @@ public class NoteListFragment extends Fragment {
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view_lines);
         Note.CardsSource data = new CardsSourceImpl(getResources()).init();
         initRecyclerView(recyclerView, data);
+        ShowNoteDescription(currentNote);
         return view;
 
     }
