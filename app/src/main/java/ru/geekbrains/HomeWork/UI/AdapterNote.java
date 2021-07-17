@@ -1,5 +1,6 @@
 package ru.geekbrains.HomeWork.UI;
 
+import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,7 +52,7 @@ public class AdapterNote extends RecyclerView.Adapter<AdapterNote.ViewHolder> {
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            description = itemView.findViewById(R.id.text11);
+            description = itemView.findViewById(R.id.rec_view);
             description.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

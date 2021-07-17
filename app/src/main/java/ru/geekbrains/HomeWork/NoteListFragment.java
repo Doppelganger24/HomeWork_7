@@ -36,7 +36,6 @@ public class NoteListFragment extends Fragment {
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view_lines);
         Note.CardsSource data = new CardsSourceImpl(getResources()).init();
         initRecyclerView(recyclerView, data);
-        ShowNoteDescription(currentNote);
         return view;
 
     }
@@ -47,6 +46,7 @@ public class NoteListFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         final AdapterNote adapterNote = new AdapterNote(data);
         recyclerView.setAdapter(adapterNote);}
+       // ShowNoteDescription(currentNote);}
        /* adapterNote.SetOnItemClickListener(new AdapterNote.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
@@ -91,7 +91,7 @@ public class NoteListFragment extends Fragment {
         NoteDescriptionFragment detail = NoteDescriptionFragment.newInstance(currentNote);
         FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        ((FragmentTransaction) fragmentTransaction).replace(R.id.NoteText, detail);
+        ((FragmentTransaction) fragmentTransaction).replace(R.id.rec_view, detail);
         fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         fragmentTransaction.commit();
     }

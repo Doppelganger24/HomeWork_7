@@ -40,7 +40,7 @@ public class NoteDescriptionFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.item, container, false);
-        RecyclerView recyclerView = view.findViewById(R.id.text11);
+        RecyclerView recyclerView = view.findViewById(R.id.rec_view);
         Note.CardsSource data = new CardsSourceImpl(getResources()).init();
         initRecyclerView(recyclerView, data);
         return view;
