@@ -18,7 +18,7 @@ public class AdapterNote extends RecyclerView.Adapter<AdapterNote.ViewHolder> {
 
     private Note.CardsSource dataSource;
     private OnItemClickListener itemClickListener;
-    private TextView description;
+
 
 
     public AdapterNote(Note.CardsSource dataSource) {
@@ -36,10 +36,6 @@ public class AdapterNote extends RecyclerView.Adapter<AdapterNote.ViewHolder> {
     @Override
     public void onBindViewHolder(AdapterNote.ViewHolder viewHolder, int position) {
       viewHolder.setData (dataSource.getCardData(position));
-
-    }
-    public void setData(Note cardData){
-        description.setText(cardData.getNoteDescriptionIndex());
 
     }
 
