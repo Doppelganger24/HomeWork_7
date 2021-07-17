@@ -1,9 +1,11 @@
-package ru.geekbrains.cityheraldry;
+package ru.geekbrains.HomeWork;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
+
+import ru.geekbrains.cityheraldry.R;
 
 public class NoteDescriptionActivity extends AppCompatActivity {
 

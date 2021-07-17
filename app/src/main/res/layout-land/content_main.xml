@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- это макет для альбомной ориентации -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
 
-    <fragment android:name="ru.geekbrains.cityheraldry.NoteListFragment"
+    <fragment android:name="ru.geekbrains.HomeWork.NoteListFragment"
         android:id="@+id/NoteList"
         android:layout_weight="1"
         android:layout_width="0px"

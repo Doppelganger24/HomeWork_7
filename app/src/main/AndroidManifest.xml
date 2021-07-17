@@ -9,8 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".NoteDescriptionActivity"></activity>
-        <activity android:name=".MainActivity">
+        <activity android:name="ru.geekbrains.HomeWork.NoteDescriptionActivity"></activity>
+        <activity android:name="ru.geekbrains.HomeWork.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

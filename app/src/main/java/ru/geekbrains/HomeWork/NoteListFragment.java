@@ -1,19 +1,23 @@
-package ru.geekbrains.cityheraldry;
+package ru.geekbrains.HomeWork;
 
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+
+import UI.AdapterNote;
+import ru.geekbrains.cityheraldry.R;
 
 public class NoteListFragment extends Fragment {
 
@@ -21,36 +25,34 @@ public class NoteListFragment extends Fragment {
     private Note currentNote;
     private boolean isLandscape;
 
+    public static NoteListFragment newInstance() {
+        return new NoteListFragment();
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_note_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_note_list, container, false);
+        RecyclerView recyclerView = view.findViewById(R.id.recycler_view_lines);
+        String[] data = getResources().getStringArray(R.array.NoteList);
+        initRecyclerView(recyclerView, data);
+        return view;
+
     }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        initList(view);
-    }
-
-    private void initList(View view) {
-        LinearLayout layoutView = (LinearLayout) view;
-        String[] notes_list = getResources().getStringArray(R.array.NoteList);
-        for (int i = 0; i < notes_list.length; i++) {
-            String notes = notes_list[i];
-            TextView tv = new TextView(getContext());
-            tv.setText(notes);
-            tv.setTextSize(30);
-            layoutView.addView(tv);
-            final int fi = i;
-            tv.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    currentNote = new Note(fi, getResources().getStringArray(R.array.NoteList)[fi]);
-                    ShowNoteDescription(currentNote);
-                }
-            });
-        }
+    private void initRecyclerView(RecyclerView recyclerView, String[] data) {
+        recyclerView.setHasFixedSize(true);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(layoutManager);
+        final AdapterNote adapterNote = new AdapterNote(data);
+        recyclerView.setAdapter(adapterNote);
+        adapterNote.SetOnItemClickListener(new AdapterNote.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                currentNote = new Note(position, data[position]);
+                ShowNoteDescription(currentNote);
+            }
+        });
     }
 
     @Override
@@ -58,7 +60,6 @@ public class NoteListFragment extends Fragment {
         outState.putParcelable(NoteList, currentNote);
         super.onSaveInstanceState(outState);
     }
-
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -90,13 +91,13 @@ public class NoteListFragment extends Fragment {
         NoteDescriptionFragment detail = NoteDescriptionFragment.newInstance(currentNote);
         FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.NoteText, detail);  // замена фрагмента
+        ((FragmentTransaction) fragmentTransaction).replace(R.id.NoteText, detail);
         fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         fragmentTransaction.commit();
     }
 
 
-    private void showPortNoteDescription(Note currentNote) {
+    public void showPortNoteDescription(Note currentNote) {
 
         Intent intent = new Intent();
         intent.setClass(getActivity(), NoteDescriptionActivity.class);

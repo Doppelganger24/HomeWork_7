@@ -1,4 +1,4 @@
-package ru.geekbrains.cityheraldry;
+package ru.geekbrains.HomeWork;
 
 import android.os.Parcel;
 import android.os.Parcelable;
