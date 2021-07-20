@@ -16,7 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 
-import UI.AdapterNote;
+import ru.geekbrains.HomeWork.UI.AdapterNote;
 import ru.geekbrains.cityheraldry.R;
 
 public class NoteListFragment extends Fragment {

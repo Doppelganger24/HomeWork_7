@@ -1,7 +1,5 @@
-package UI;
+package ru.geekbrains.HomeWork.UI;
 
-import android.content.Intent;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 
@@ -36,8 +35,8 @@ public class AdapterNote extends RecyclerView.Adapter<AdapterNote.ViewHolder> {
 
     @Override
     public void onBindViewHolder(AdapterNote.ViewHolder holder, int position) {
-        holder.getTextView().setText(dataSource[position]);
-
+        TextView hold = holder.itemView.findViewById(R.id.textView1);
+        hold.setText(dataSource[position]);
     }
 
     @Override
@@ -47,12 +46,12 @@ public class AdapterNote extends RecyclerView.Adapter<AdapterNote.ViewHolder> {
 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView textView;
+        private CardView cardView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            textView = (TextView) itemView;
-            textView.setOnClickListener(new View.OnClickListener() {
+            cardView = (CardView) itemView;
+            cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     if (itemClickListener != null) {
@@ -62,8 +61,8 @@ public class AdapterNote extends RecyclerView.Adapter<AdapterNote.ViewHolder> {
             });
         }
 
-        public TextView getTextView() {
-            return textView;
+        public CardView getTextView() {
+            return cardView;
         }
     }
 
