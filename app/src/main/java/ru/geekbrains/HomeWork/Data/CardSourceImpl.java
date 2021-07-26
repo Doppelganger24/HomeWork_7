@@ -17,7 +17,7 @@ public class CardSourceImpl implements CardSource {
 
     }
 
-    private List<CardData> init() {
+    public List<CardData> init() {
         String[] noteList = resources.getStringArray(R.array.NoteList);
         for (int i = 0; i < noteList.length; i++) {
             dataSource.add(new CardData(noteList[i]));
@@ -33,6 +33,26 @@ public class CardSourceImpl implements CardSource {
     @Override
     public CardData getCardData(int position) {
         return dataSource.get(position);
+    }
+
+    @Override
+    public void addCardData(CardData cardData) {
+
+    }
+
+    @Override
+    public void deleteCardData(int position) {
+
+    }
+
+    @Override
+    public void updateCardData(int position, CardData cardData) {
+
+    }
+
+    @Override
+    public void clearCardData() {
+
     }
 
     public List<CardData> getDataSource() {

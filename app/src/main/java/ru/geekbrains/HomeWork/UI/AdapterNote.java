@@ -11,17 +11,22 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import javax.sql.DataSource;
+
+import ru.geekbrains.HomeWork.Data.CardData;
+import ru.geekbrains.HomeWork.Data.CardSource;
 import ru.geekbrains.cityheraldry.R;
 
 
 public class AdapterNote extends RecyclerView.Adapter<AdapterNote.ViewHolder> {
 
 
-    private final String[] dataSource;
+    //private final String[] dataSource;
+    private CardSource dataSource;
     private OnItemClickListener itemClickListener;
 
 
-    public AdapterNote(String[] dataSource) {
+    public AdapterNote(CardSource dataSource) {
         this.dataSource = dataSource;
     }
 
@@ -35,23 +40,31 @@ public class AdapterNote extends RecyclerView.Adapter<AdapterNote.ViewHolder> {
 
     @Override
     public void onBindViewHolder(AdapterNote.ViewHolder holder, int position) {
-        TextView hold = holder.itemView.findViewById(R.id.textView1);
-        hold.setText(dataSource[position]);
+       /* TextView hold = holder.itemView.findViewById(R.id.textView1);
+        hold.setText(dataSource[position]);*/
+
+        holder.setData(dataSource.getCardData(position));
     }
+
 
     @Override
     public int getItemCount() {
-        return dataSource.length;
+        return dataSource.size();
     }
 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private CardView cardView;
+        private TextView noteList;
+
+        private void setData(CardData cardData) {
+            noteList.setText(cardData.getDescription());
+        }
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            cardView = (CardView) itemView;
-            cardView.setOnClickListener(new View.OnClickListener() {
+            //cardView = (CardView) itemView;
+            noteList = (itemView).findViewById(R.id.textView1);
+           noteList.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     if (itemClickListener != null) {
@@ -61,12 +74,13 @@ public class AdapterNote extends RecyclerView.Adapter<AdapterNote.ViewHolder> {
             });
         }
 
-        public CardView getTextView() {
+        /*public CardView getTextView() {
             return cardView;
-        }
-    }
+        }*/
 
-    public void SetOnItemClickListener(OnItemClickListener itemClickListener) {
+
+        }
+   public void SetOnItemClickListener(OnItemClickListener itemClickListener) {
         this.itemClickListener = itemClickListener;
     }
 
@@ -74,6 +88,7 @@ public class AdapterNote extends RecyclerView.Adapter<AdapterNote.ViewHolder> {
         void onItemClick(View view, int position);
 
     }
+
 
 
 }

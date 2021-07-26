@@ -14,6 +14,11 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import javax.sql.DataSource;
+
+import ru.geekbrains.HomeWork.Data.CardData;
+import ru.geekbrains.HomeWork.Data.CardSource;
+import ru.geekbrains.HomeWork.Data.CardSourceImpl;
 import ru.geekbrains.HomeWork.UI.AdapterNote;
 import ru.geekbrains.cityheraldry.R;
 
@@ -32,22 +37,24 @@ public class NoteListFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_note_list, container, false);
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view_lines);
-        String[] data = getResources().getStringArray(R.array.NoteList);
-        initRecyclerView(recyclerView, data);
+        initRecyclerView(recyclerView);
         return view;
 
     }
 
-    private void initRecyclerView(RecyclerView recyclerView, String[] data) {
+    private void initRecyclerView(RecyclerView recyclerView) {
+        CardSourceImpl data = new CardSourceImpl(getResources());
+        data.init();
+        String [] descriptionNote = getResources().getStringArray(R.array.noteDescription);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
         final AdapterNote adapterNote = new AdapterNote(data);
         recyclerView.setAdapter(adapterNote);
-        adapterNote.SetOnItemClickListener(new AdapterNote.OnItemClickListener() {
+       adapterNote.SetOnItemClickListener(new AdapterNote.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                currentNote = new Note(position, data[position]);
+                currentNote = new Note(position,descriptionNote [position]);
                 ShowNoteDescription(currentNote);
             }
         });
