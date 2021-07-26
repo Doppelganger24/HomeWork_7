@@ -10,4 +10,6 @@
     <string name="about">О приложении</string>
     <string name="open">Открыть</string>
     <string name="close">Закрыть</string>
+    <string name="add">Добавить</string>
+    <string name="delete">Удалить</string>
 </resources>

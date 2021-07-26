@@ -55,11 +55,11 @@ public class MainActivity extends AppCompatActivity {
             case R.id.favorite:
                 Toast.makeText(MainActivity.this, "Избранное", Toast.LENGTH_SHORT).show();
                 return true;
-            case R.id.smt_1:
-                Toast.makeText(MainActivity.this, "Что-то №1", Toast.LENGTH_SHORT).show();
+            case R.id.add:
+                Toast.makeText(MainActivity.this, "Добавить", Toast.LENGTH_SHORT).show();
                 return true;
-            case R.id.smt_2:
-                Toast.makeText(MainActivity.this, "Что-то №2", Toast.LENGTH_SHORT).show();
+            case R.id.delete:
+                Toast.makeText(MainActivity.this, "Удалить", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.smt_3:
                 Toast.makeText(MainActivity.this, "Что-то №3", Toast.LENGTH_SHORT).show();

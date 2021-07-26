@@ -14,14 +14,14 @@
         android:title="@string/favorite"
         app:showAsAction="always" />
     <item
-        android:id="@+id/smt_1"
+        android:id="@+id/add"
         android:orderInCategory="3"
-        android:title="@string/smt_1"
+        android:title="@string/add"
         app:showAsAction="never" />
     <item
-        android:id="@+id/smt_2"
+        android:id="@+id/delete"
         android:orderInCategory="4"
-        android:title="@string/smt_2"
+        android:title="@string/delete"
         app:showAsAction="never" />
 
 </menu>
