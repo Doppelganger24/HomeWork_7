@@ -5,7 +5,7 @@ public interface CardSource {
     CardData getCardData (int position);
 
     void addCardData (CardData cardData);
-    void deleteCardData (int position);
+    void deleteCardData  (int position);
     void updateCardData (int position,CardData cardData);
     void clearCardData();
 }

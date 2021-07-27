@@ -31,8 +31,10 @@ public class NoteListFragment extends Fragment {
     public static final String NoteList = "NoteList";
     private Note currentNote;
     private boolean isLandscape;
-    private CardSource data;
-    private AdapterNote adapter;
+    private CardSourceImpl cardSourceImpl;
+    private AdapterNote  adapterNote;
+    private RecyclerView recyclerView;
+
 
     public static NoteListFragment newInstance() {
         return new NoteListFragment();
@@ -42,7 +44,7 @@ public class NoteListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_note_list, container, false);
-        RecyclerView recyclerView = view.findViewById(R.id.recycler_view_lines);
+        recyclerView = view.findViewById(R.id.recycler_view_lines);
         initRecyclerView(recyclerView);
         setHasOptionsMenu(true);
         return view;
@@ -61,22 +63,26 @@ public class NoteListFragment extends Fragment {
 
         switch (item.getItemId()){
             case R.id.add:
+                cardSourceImpl.addCardData(new CardData("Новая заметка"+(cardSourceImpl.size()+1)));
+                adapterNote.notifyItemInserted(cardSourceImpl.size()-1);
+                recyclerView.smoothScrollToPosition(cardSourceImpl.size()-1);
                 return true;
             case R.id.delete:
-                data.clearCardData();
-                adapter.notifyDataSetChanged();
+                cardSourceImpl.clearCardData();
+                adapterNote.notifyDataSetChanged();
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
     private void initRecyclerView(RecyclerView recyclerView) {
-        CardSourceImpl data = new CardSourceImpl(getResources());
-        data.init();
+        cardSourceImpl = new CardSourceImpl(getResources());
+        cardSourceImpl.init();
         String [] descriptionNote = getResources().getStringArray(R.array.noteDescription);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
-        final AdapterNote adapterNote = new AdapterNote(data);
+        adapterNote = new AdapterNote(cardSourceImpl);
         recyclerView.setAdapter(adapterNote);
        adapterNote.SetOnItemClickListener(new AdapterNote.OnItemClickListener() {
             @Override

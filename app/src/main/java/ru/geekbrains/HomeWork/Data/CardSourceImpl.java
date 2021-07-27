@@ -12,7 +12,7 @@ public class CardSourceImpl implements CardSource {
     private Resources resources;
 
     public CardSourceImpl(Resources resources) {
-        dataSource = new ArrayList<>();
+        dataSource = new ArrayList<>(2);
         this.resources = resources;
 
     }
