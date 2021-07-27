@@ -1,9 +1,13 @@
 package ru.geekbrains.HomeWork;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -27,6 +31,8 @@ public class NoteListFragment extends Fragment {
     public static final String NoteList = "NoteList";
     private Note currentNote;
     private boolean isLandscape;
+    private CardSource data;
+    private AdapterNote adapter;
 
     public static NoteListFragment newInstance() {
         return new NoteListFragment();
@@ -38,8 +44,29 @@ public class NoteListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_note_list, container, false);
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view_lines);
         initRecyclerView(recyclerView);
+        setHasOptionsMenu(true);
         return view;
 
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.my_menu,menu);
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()){
+            case R.id.add:
+                return true;
+            case R.id.delete:
+                data.clearCardData();
+                adapter.notifyDataSetChanged();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void initRecyclerView(RecyclerView recyclerView) {
@@ -58,6 +85,7 @@ public class NoteListFragment extends Fragment {
                 ShowNoteDescription(currentNote);
             }
         });
+
     }
 
     @Override
