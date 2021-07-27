@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -32,7 +34,7 @@ public class NoteListFragment extends Fragment {
     private Note currentNote;
     private boolean isLandscape;
     private CardSourceImpl cardSourceImpl;
-    private AdapterNote  adapterNote;
+    private AdapterNote adapterNote;
     private RecyclerView recyclerView;
 
 
@@ -52,20 +54,26 @@ public class NoteListFragment extends Fragment {
     }
 
     @Override
+    public void onCreateContextMenu(@NonNull ContextMenu menu, @NonNull View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        getActivity().getMenuInflater().inflate(R.menu.context_menu, menu);
+    }
+
+    @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.my_menu,menu);
+        inflater.inflate(R.menu.my_menu, menu);
     }
 
     @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.add:
-                cardSourceImpl.addCardData(new CardData("Новая заметка"+(cardSourceImpl.size()+1)));
-                adapterNote.notifyItemInserted(cardSourceImpl.size()-1);
-                recyclerView.smoothScrollToPosition(cardSourceImpl.size()-1);
+                cardSourceImpl.addCardData(new CardData("Новая заметка" + (cardSourceImpl.size() + 1)));
+                adapterNote.notifyItemInserted(cardSourceImpl.size() - 1);
+                recyclerView.smoothScrollToPosition(cardSourceImpl.size() - 1);
                 return true;
             case R.id.delete:
                 cardSourceImpl.clearCardData();
@@ -75,19 +83,39 @@ public class NoteListFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        int position = adapterNote.getPosition();
+        switch (item.getItemId()) {
+
+            case R.id.add:
+                cardSourceImpl.addCardData(new CardData("Новая заметка" + (cardSourceImpl.size() + 1)));
+                adapterNote.notifyItemInserted(cardSourceImpl.size() - 1);
+                recyclerView.smoothScrollToPosition(cardSourceImpl.size() - 1);
+                return true;
+            case R.id.delete:
+                cardSourceImpl.deleteCardData(position);
+                adapterNote.notifyItemRemoved(position);
+
+
+                return true;
+        }
+        return super.onContextItemSelected(item);
+    }
+
     private void initRecyclerView(RecyclerView recyclerView) {
         cardSourceImpl = new CardSourceImpl(getResources());
         cardSourceImpl.init();
-        String [] descriptionNote = getResources().getStringArray(R.array.noteDescription);
+        String[] descriptionNote = getResources().getStringArray(R.array.noteDescription);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
-        adapterNote = new AdapterNote(cardSourceImpl);
+        adapterNote = new AdapterNote(cardSourceImpl, this);
         recyclerView.setAdapter(adapterNote);
-       adapterNote.SetOnItemClickListener(new AdapterNote.OnItemClickListener() {
+        adapterNote.SetOnItemClickListener(new AdapterNote.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                currentNote = new Note(position,descriptionNote [position]);
+                currentNote = new Note(position, descriptionNote[position]);
                 ShowNoteDescription(currentNote);
             }
         });

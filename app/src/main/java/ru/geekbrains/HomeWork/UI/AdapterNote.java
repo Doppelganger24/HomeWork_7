@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 
@@ -23,11 +24,20 @@ public class AdapterNote extends RecyclerView.Adapter<AdapterNote.ViewHolder> {
 
     //private final String[] dataSource;
     private CardSource dataSource;
-    private OnItemClickListener itemClickListener;
+    public OnItemClickListener itemClickListener;
+
+    public int getPosition() {
+        return position;
+    }
+
+   private int position;
+
+     Fragment fragment;
 
 
-    public AdapterNote(CardSource dataSource) {
+    public AdapterNote(CardSource dataSource,Fragment fragment) {
         this.dataSource = dataSource;
+        this.fragment = fragment;
     }
 
     @NonNull
@@ -63,13 +73,24 @@ public class AdapterNote extends RecyclerView.Adapter<AdapterNote.ViewHolder> {
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             //cardView = (CardView) itemView;
+            fragment.registerForContextMenu(itemView);
             noteList = (itemView).findViewById(R.id.textView1);
+            noteList.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    position = getLayoutPosition();
+                    v.showContextMenu(0,0);
+                    return false;
+                }
+            });
            noteList.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     if (itemClickListener != null) {
                         itemClickListener.onItemClick(view, getAdapterPosition());
+
                     }
+
                 }
             });
         }
